@@ -7,6 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import NewTaskForm from './NewTaskForm';
+import Checkbox from '@material-ui/core/Checkbox';
 // import Button from 'react-bootstrap/Button';
 // import Fade from 'react-bootstrap/Fade';
 
@@ -29,10 +30,10 @@ class TaskList extends React.Component {
     this.props.deleteTask(this.props.selectedGroupIndex, taskId)
   }
 
-  handleCheck = (taskIndex) => {
+  handleCheck = (taskIndex) => (event) => {
     this.props.taskStatusChanged(this.props.selectedGroupIndex, taskIndex)
   }
-
+  
   render() {
     const {selectedGroup} = this.props
     return (
@@ -41,14 +42,18 @@ class TaskList extends React.Component {
         <Row>
           <Col xs={{ span: 8, offset: 2}}>
             <div style={styles.title}>{selectedGroup.name} Todos</div>
-            <ListGroup style={styles.container}>               
+            <ListGroup>               
               {
                 selectedGroup.tasks.map((task, index) => {
                   return (
-                    <ListGroup.Item key={task.id}>
-                      <div style={{display: 'flex', flexFlow: 'row', justifyContent: 'flex-start'}}>
-                        <Form.Check checked={task.isDone} type={'checkbox'} className="col-sm-1" onChange={() => this.handleCheck(index)} />
-                        <div className="col-sm-10" style={styles.taskName(task.isDone)}>
+                    <ListGroup.Item key={index}>
+                      <div className="row align-items-center">
+                        <div className="col-sm-2">
+                          <Checkbox checked={task.isDone}
+                              color="primary"                           
+                              onChange={this.handleCheck(index)} />
+                        </div>                        
+                        <div className="col-sm-9" style={styles.taskName(task.isDone)}>
                           {task.name}
                         </div>
                         <div style={styles.deleteIconWrapper} className="col-sm-1">
@@ -78,9 +83,11 @@ class TaskList extends React.Component {
 }
 
 const styles = {
-  container: {
-    // margin: '2rem 0 0'
-  },
+  // container: {
+  //   display: 'flex', 
+  //   flexFlow: 'row', 
+  //   justifyContent: 'flex-start'
+  // },
 
   pointer: {
     cursor: 'pointer'

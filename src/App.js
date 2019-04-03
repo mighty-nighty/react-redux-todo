@@ -2,26 +2,30 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import { BrowserRouter, Route, NavLink } from 'react-router-dom';
 import Radium from 'radium';
+import { Provider } from 'react-redux';
 import './styles/App.css';
 
 import Dashboard from './components/Dashboard';
 import Home from './components/Home';
+import store from './store';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <BrowserRouter>
-          <header style={styles.header}>
-            <img src={logo} className="App-logo" alt="logo" />
-            <NavLink to="/" style={styles.navLink}>
-              <span style={styles.logoText}>Actionlist</span>
-            </NavLink>
-          </header>
-          <Route exact path='/' component={Home} />
-          <Route path='/dashboard' render={() => <Dashboard />} />
-        </BrowserRouter>
-      </div>
+      <Provider store={store}>
+        <div className="App">
+          <BrowserRouter>
+            <header style={styles.header}>
+              <img src={logo} className="App-logo" alt="logo" />
+              <NavLink to="/" style={styles.navLink}>
+                <span style={styles.logoText}>Actionlist</span>
+              </NavLink>
+            </header>
+            <Route exact path='/' component={Home} />
+            <Route path='/dashboard' render={() => <Dashboard />} />
+          </BrowserRouter>
+        </div>
+      </Provider>
     );
   }
 }

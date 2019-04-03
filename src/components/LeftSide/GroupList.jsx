@@ -2,12 +2,7 @@ import React from 'react';
 import Radium from 'radium';
 
 import Group from './Group';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Button from '@material-ui/core/Button';
+import MyModal from './MyModal';
 
 class GroupList extends React.Component {
   state = {
@@ -39,33 +34,18 @@ class GroupList extends React.Component {
           {
             this.props.groups.map((group, index) => {
               return <Group group={group} 
-                            key={group.id}
+                            key={index}
                             groupIndex={index} 
                             selectGroup={this.props.selectGroup} 
                             deleteGroup={this.props.deleteGroup}
                             showModal={this.showModal} />
             })
           }
-        </div>
-        <Dialog 
-          open={this.state.isModalOpen}
-          onClose={this.closeModal}            
-        >
-          <DialogTitle>Confirm action</DialogTitle>
-          <DialogContent style={styles.modal}>
-            <DialogContentText>
-              Do you really want to delete this group?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.deleteFunc} variant="contained" color="secondary">
-              Yes
-            </Button>
-            <Button onClick={this.closeModal} variant="contained" color="primary">
-              No
-            </Button>
-          </DialogActions>
-        </Dialog>
+        </div> 
+        <MyModal isModalOpen={this.state.isModalOpen}
+                styles={styles.modal}     
+                closeModal={this.closeModal}
+                deleteFunc={this.deleteFunc} />       
       </>
     )
   }   

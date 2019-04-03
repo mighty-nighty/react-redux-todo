@@ -1,6 +1,8 @@
 import React from 'react';
-import LeftSide from './LeftSide';
-import RightSide from './RightSide';
+import LeftSide from './LeftSide/LeftSide';
+import RightSide from './RightSide/RightSide';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 class Dashboard extends React.Component {
   state = {
@@ -45,7 +47,7 @@ class Dashboard extends React.Component {
 
   deleteGroup = (id) => {
     this.setState(prevState => {
-      let updatedGroups = prevState.groups.filter(group => group.id !== id)
+      let updatedGroups = prevState.groups.filter(group => group.id !== id) // переделать удаление по индексу
       return { groups: updatedGroups, selectedGroupIndex: null }
     })
   }
@@ -113,4 +115,4 @@ const styles = {
   }
 }
 
-export default Dashboard;
+export default connect()(Dashboard);
