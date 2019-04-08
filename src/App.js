@@ -38,7 +38,7 @@ const styles = {
     alignItems: 'center',
     backgroundColor: '#282c34',
     height: '78px',
-    fontSize: 'calc(16px + 2vmin)',
+    fontSize: '2.2rem',
     color: 'white',
     fontFamily: '\'Lobster Two\', cursive',
     fontStyle: 'italic'

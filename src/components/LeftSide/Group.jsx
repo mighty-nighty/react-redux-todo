@@ -13,7 +13,7 @@ const Group = (props) => {
   return (
     <div style={styles.groupBlock}>
       <div style={styles.groupName} onClick={handleClick}>{props.group.name}</div>
-      <i style={styles.deleteIcon} className="fa fa-times" onClick={() => props.showModal(props.group.id)} title="Delete group"></i>
+      <i style={styles.deleteIcon} className="fa fa-times" onClick={() => props.showModal(props.groupIndex)} title="Delete group"></i>
     </div>
   )
 }

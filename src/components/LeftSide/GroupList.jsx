@@ -7,15 +7,15 @@ import MyModal from './MyModal';
 class GroupList extends React.Component {
   state = {
     isModalOpen: false,
-    selectedGroupId: null
+    selectedGroupIndex: null
   }
 
-  showModal = (groupId) => {
-    this.setState({ isModalOpen: true, selectedGroupId: groupId })
+  showModal = (groupIndex) => {
+    this.setState({ isModalOpen: true, selectedGroupIndex: groupIndex })
   }
 
   deleteFunc = () => {
-    this.props.deleteGroup(this.state.selectedGroupId)
+    this.props.deleteGroup(this.state.selectedGroupIndex)
     this.closeModal()
   }
 

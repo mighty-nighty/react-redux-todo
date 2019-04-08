@@ -45,9 +45,9 @@ class Dashboard extends React.Component {
     })
   }
 
-  deleteGroup = (id) => {
+  deleteGroup = (index) => {
     this.setState(prevState => {
-      let updatedGroups = prevState.groups.filter(group => group.id !== id) // переделать удаление по индексу
+      let updatedGroups = prevState.groups.filter((group, i) => i !== index) // переделал на удаление по индексу
       return { groups: updatedGroups, selectedGroupIndex: null }
     })
   }

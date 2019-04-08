@@ -16,7 +16,7 @@ const Home = () => {
 
 const styles = {
   title: {
-    margin: '2rem auto 2rem'
+    margin: '8rem auto 2rem'
   }
 }
 
