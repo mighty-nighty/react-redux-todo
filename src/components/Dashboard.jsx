@@ -8,34 +8,34 @@ class Dashboard extends React.Component {
   state = {
     newGroupFormVisible: false,
     selectedGroupIndex: null,
-    groups: [
-      {
-        id: 1,
-        name: 'Home',
-        tasks: [
-          { id: 1, name: 'Brush teeth', isDone: false },
-          { id: 2, name: 'Drink vodka', isDone: false },
-          { id: 3, name: 'Kill the mouse!', isDone: false }
-        ]
-      },
-      {
-        id: 2,
-        name: 'Work',
-        tasks: [
-          { id: 1, name: 'Get to work', isDone: false },
-          { id: 2, name: 'Make some tasks', isDone: false },
-          { id: 3, name: 'Kill medfarm', isDone: false }
-        ]
-      },
-      {
-        id: 3,
-        name: 'Education',
-        tasks: [
-          { id: 1, name: 'Learn hindy', isDone: false },
-          { id: 2, name: 'Learn trololo', isDone: false },
-        ]
-      }
-    ]
+    // groups: [
+    //   {
+    //     id: 1,
+    //     name: 'Home',
+    //     tasks: [
+    //       { id: 1, name: 'Brush teeth', isDone: false },
+    //       { id: 2, name: 'Drink vodka', isDone: false },
+    //       { id: 3, name: 'Kill the mouse!', isDone: false }
+    //     ]
+    //   },
+    //   {
+    //     id: 2,
+    //     name: 'Work',
+    //     tasks: [
+    //       { id: 1, name: 'Get to work', isDone: false },
+    //       { id: 2, name: 'Make some tasks', isDone: false },
+    //       { id: 3, name: 'Kill medfarm', isDone: false }
+    //     ]
+    //   },
+    //   {
+    //     id: 3,
+    //     name: 'Education',
+    //     tasks: [
+    //       { id: 1, name: 'Learn hindy', isDone: false },
+    //       { id: 2, name: 'Learn trololo', isDone: false },
+    //     ]
+    //   }
+    // ]
   }
 
   addGroup = (groupName) => {
@@ -90,7 +90,7 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div style={styles.dashboard}>
-        <LeftSide groups={this.state.groups}
+        <LeftSide groups={this.props.groups}
           deleteGroup={this.deleteGroup}
           showNewGroupForm={this.showNewGroupForm}
           newGroupFormVisible={this.state.newGroupFormVisible}
@@ -115,4 +115,10 @@ const styles = {
   }
 }
 
-export default connect()(Dashboard);
+const mapStateToProps = (state => {
+  return {
+    groups: state.groups
+  }  
+})
+
+export default connect(mapStateToProps)(Dashboard);

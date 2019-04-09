@@ -1,5 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
+import { connect } from 'react-redux';
 
 class NewGroupForm extends React.Component {
   state = {
@@ -55,4 +56,11 @@ const styles = {
   }
 }
 
-export default Radium(NewGroupForm);
+const mapDispatchToProps = (dispatch, state) => {
+  let name = state.groupName
+  return {
+    addGroup: (name) => dispatch({type: 'ADD_GROUP', payload: name})
+  }
+}
+
+export default connect(mapDispatchToProps)(NewGroupForm);
