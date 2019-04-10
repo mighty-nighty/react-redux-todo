@@ -1,19 +1,15 @@
 import React from 'react';
-
 import GroupList from './GroupList';
 import NewGroupForm from './NewGroupForm';
+import { connect } from 'react-redux';
 
 const LeftSide = (props) => {  
   return (
     <div style={styles.leftSide}>
       {
         props.newGroupFormVisible 
-        ? <NewGroupForm addGroup={props.addGroup}
-                        showNewGroupForm={props.showNewGroupForm} />
-        : <GroupList groups={props.groups}
-                    deleteGroup={props.deleteGroup}
-                    selectGroup={props.selectGroup}
-                    showNewGroupForm={props.showNewGroupForm} />
+        ? <NewGroupForm />
+        : <GroupList groups={props.groups} />
       }     
     </div>
   ) 
@@ -27,4 +23,10 @@ const styles = {
   }  
 }
 
-export default LeftSide;
+const mapStateToProps = state => {
+  return {
+    newGroupFormVisible: state.newGroupFormVisible
+  }
+}
+
+export default connect(mapStateToProps)(LeftSide);

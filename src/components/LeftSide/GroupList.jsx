@@ -1,8 +1,11 @@
 import React from 'react';
 import Radium from 'radium';
-
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import Group from './Group';
 import MyModal from './MyModal';
+import { deleteGroup } from '../../actions/groupActions';
+import { toggleNewGroupFormVisibility } from '../../actions/layoutActions';
 
 class GroupList extends React.Component {
   state = {
@@ -10,7 +13,7 @@ class GroupList extends React.Component {
     selectedGroupIndex: null
   }
 
-  showModal = (groupIndex) => {
+  showDeleteModal = (groupIndex) => {
     this.setState({ isModalOpen: true, selectedGroupIndex: groupIndex })
   }
 
@@ -35,10 +38,9 @@ class GroupList extends React.Component {
             this.props.groups.map((group, index) => {
               return <Group group={group} 
                             key={index}
-                            groupIndex={index} 
-                            selectGroup={this.props.selectGroup} 
+                            groupIndex={index}                            
                             deleteGroup={this.props.deleteGroup}
-                            showModal={this.showModal} />
+                            showDeleteModal={this.showDeleteModal} />
             })
           }
         </div> 
@@ -81,4 +83,13 @@ const styles = {
   }
 }
 
-export default Radium(GroupList);
+const mapDispatchToProps = (dispatch) => {  
+  return {
+    deleteGroup: index => dispatch(deleteGroup(index)),
+    showNewGroupForm: () => dispatch(toggleNewGroupFormVisibility())
+  }
+}
+
+const composed = compose(connect(null, mapDispatchToProps), Radium)
+
+export default composed(GroupList);

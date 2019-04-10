@@ -1,6 +1,8 @@
 import React from "react";
 import Radium from 'radium';
-
+import { connect } from 'react-redux';
+import { compose } from "redux";
+import { selectGroup } from "../../actions/groupActions";
 // import Col from 'react-bootstrap/Col';
 // import Row from 'react-bootstrap/Row';
 // import Container from 'react-bootstrap/Container';
@@ -13,7 +15,7 @@ const Group = (props) => {
   return (
     <div style={styles.groupBlock}>
       <div style={styles.groupName} onClick={handleClick}>{props.group.name}</div>
-      <i style={styles.deleteIcon} className="fa fa-times" onClick={() => props.showModal(props.groupIndex)} title="Delete group"></i>
+      <i style={styles.deleteIcon} className="fa fa-times" onClick={() => props.showDeleteModal(props.groupIndex)} title="Delete group"></i>
     </div>
   )
 }
@@ -46,4 +48,12 @@ const styles = {
   }
 }
 
-export default Radium(Group);
+const mapDispatchToProps = dispatch => {
+  return {
+    selectGroup: index => dispatch(selectGroup(index))
+  }
+}
+
+const composed = compose(connect(null, mapDispatchToProps), Radium)
+
+export default composed(Group);

@@ -1,5 +1,8 @@
 import React from 'react';
 import Radium from 'radium';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { addTask } from '../../actions/taskActions';
 
 class NewTaskForm extends React.Component {
   state = {
@@ -8,11 +11,11 @@ class NewTaskForm extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    this.props.addTaskFunc(this.state.taskName)
+    this.props.addTask(this.state.taskName)
     this.props.showAddForm()
   }
 
-  handleCHange = (e) => {
+  handleChange = (e) => {
     this.setState({ taskName: e.target.value })
   }
 
@@ -23,7 +26,7 @@ class NewTaskForm extends React.Component {
   render() {
     return (
       <form style={styles.form} onSubmit={this.handleSubmit}>
-        <input style={[styles.border, styles.input]} type='text' placeholder='Task name' onChange={this.handleCHange} />
+        <input style={[styles.border, styles.input]} type='text' placeholder='Task name' onChange={this.handleChange} autoFocus />
         <button style={[styles.border, styles.button]} type='submit'>Save</button>
         <button style={[styles.border, styles.button]} onClick={this.handleCancel}>Cancel</button>
       </form>
@@ -54,4 +57,12 @@ const styles = {
   }
 }
 
-export default Radium(NewTaskForm);
+const mapDispatchToProps = dispatch => {
+  return {
+    addTask: name => dispatch(addTask(name))
+  }
+}
+
+const composed = compose(connect(null, mapDispatchToProps), Radium)
+
+export default composed(NewTaskForm);

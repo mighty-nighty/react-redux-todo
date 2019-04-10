@@ -1,11 +1,13 @@
 import React from 'react';
 import Radium from 'radium';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { deleteTask } from '../../actions/taskActions';
 
 import ListGroup from 'react-bootstrap/ListGroup';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
 import NewTaskForm from './NewTaskForm';
 import Checkbox from '@material-ui/core/Checkbox';
 // import Button from 'react-bootstrap/Button';
@@ -16,10 +18,6 @@ class TaskList extends React.Component {
     showAddTaskForm: false,
   }
 
-  addTaskFunc = (name) => {
-    this.props.addTask(this.props.selectedGroup, this.props.selectedGroupIndex, name)
-  }
-
   showAddForm = () => {
     this.setState(prevState => {
       return { showAddTaskForm: !prevState.showAddTaskForm }
@@ -27,7 +25,7 @@ class TaskList extends React.Component {
   }
 
   deleteTaskFunc = (taskId) => {
-    this.props.deleteTask(this.props.selectedGroupIndex, taskId)
+    this.props.deleteTask(taskId)
   }
 
   handleCheck = (taskIndex) => (event) => {
@@ -72,7 +70,7 @@ class TaskList extends React.Component {
         <Row>
           {
             this.state.showAddTaskForm
-            ? <NewTaskForm addTaskFunc={this.addTaskFunc} showAddForm={this.showAddForm}></NewTaskForm>
+            ? <NewTaskForm showAddForm={this.showAddForm}></NewTaskForm>
             : <button style={styles.addBtn} onClick={this.showAddForm}>Add new task</button> 
           }
         </Row>
@@ -124,4 +122,12 @@ const styles = {
   }
 }
 
-export default Radium(TaskList);
+const mapDispatchToProps = dispatch => {
+  return {
+    deleteTask: id => dispatch(deleteTask(id))
+  }
+}
+
+const composed = compose(connect(null, mapDispatchToProps), Radium)
+
+export default composed(TaskList);

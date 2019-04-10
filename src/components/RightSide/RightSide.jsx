@@ -7,12 +7,11 @@ const RightSide = (props) => {
       {
         props.selectedGroupIndex !== null
         ? <TaskList selectedGroup={props.groups[props.selectedGroupIndex]}
-                    selectedGroupIndex={props.selectedGroupIndex}
-                    addTask={props.addTask} 
+                    selectedGroupIndex={props.selectedGroupIndex}                     
                     deleteTask={props.deleteTask}
                     taskStatusChanged={props.taskStatusChanged} />
         : <div style={styles.message}>
-            Pick a group or create your custom group to create tasks
+            Pick a group or create your custom group to add tasks
           </div>
       }        
     </div>

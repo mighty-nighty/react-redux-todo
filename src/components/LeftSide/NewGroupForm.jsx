@@ -1,6 +1,9 @@
 import React from 'react';
 import Radium from 'radium';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { addGroup } from '../../actions/groupActions';
+import { toggleNewGroupFormVisibility } from '../../actions/layoutActions';
 
 class NewGroupForm extends React.Component {
   state = {
@@ -11,24 +14,20 @@ class NewGroupForm extends React.Component {
     e.preventDefault()
     if (this.state.groupName) {
       this.props.addGroup(this.state.groupName)
-      this.props.showNewGroupForm()
+      this.props.hideNewGroupForm()
     }
   }
 
   handleChange = (e) => {
     this.setState({ groupName: e.target.value })
-  }
-
-  handleCancel = () => {
-    this.props.showNewGroupForm()
-  }
+  }  
 
   render() {
     return (
       <form style={styles.form} onSubmit={this.handleSubmit}>
         <input style={[styles.border, styles.input]} type="text" placeholder="Group name" onChange={this.handleChange} />
         <button style={[styles.border, styles.button]} type="submit">Save</button>
-        <button style={[styles.border, styles.button]} onClick={this.handleCancel}>Cancel</button>
+        <button style={[styles.border, styles.button]} onClick={this.props.hideNewGroupForm}>Cancel</button>
       </form>
     )
   }
@@ -56,11 +55,13 @@ const styles = {
   }
 }
 
-const mapDispatchToProps = (dispatch, state) => {
-  let name = state.groupName
+const mapDispatchToProps = dispatch => {
   return {
-    addGroup: (name) => dispatch({type: 'ADD_GROUP', payload: name})
+    addGroup: name => dispatch(addGroup(name)),
+    hideNewGroupForm: () => dispatch(toggleNewGroupFormVisibility())
   }
 }
 
-export default connect(mapDispatchToProps)(NewGroupForm);
+const composed = compose(connect(null, mapDispatchToProps), Radium)
+
+export default composed(NewGroupForm);
