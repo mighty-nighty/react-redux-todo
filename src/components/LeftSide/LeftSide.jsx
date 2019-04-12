@@ -3,7 +3,7 @@ import GroupList from './GroupList';
 import NewGroupForm from './NewGroupForm';
 import { connect } from 'react-redux';
 
-const LeftSide = (props) => {  
+const LeftSide = props => {  
   return (
     <div style={styles.leftSide}>
       {
@@ -25,7 +25,7 @@ const styles = {
 
 const mapStateToProps = state => {
   return {
-    newGroupFormVisible: state.newGroupFormVisible
+    newGroupFormVisible: state.layout.newGroupFormVisible
   }
 }
 

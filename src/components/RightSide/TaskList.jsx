@@ -2,38 +2,20 @@ import React from 'react';
 import Radium from 'radium';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { deleteTask } from '../../actions/taskActions';
+import { deleteTask, changeTaskStatus } from '../../actions/groupActions';
 
 import ListGroup from 'react-bootstrap/ListGroup';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import NewTaskForm from './NewTaskForm';
 import Checkbox from '@material-ui/core/Checkbox';
+import TaskListButtonBlock from './TaskListButtonBlock';
 // import Button from 'react-bootstrap/Button';
 // import Fade from 'react-bootstrap/Fade';
 
-class TaskList extends React.Component {
-  state = {
-    showAddTaskForm: false,
-  }
-
-  showAddForm = () => {
-    this.setState(prevState => {
-      return { showAddTaskForm: !prevState.showAddTaskForm }
-    })
-  }
-
-  deleteTaskFunc = (taskId) => {
-    this.props.deleteTask(taskId)
-  }
-
-  handleCheck = (taskIndex) => (event) => {
-    this.props.taskStatusChanged(this.props.selectedGroupIndex, taskIndex)
-  }
-  
+class TaskList extends React.Component {    
   render() {
-    const {selectedGroup} = this.props
+    const {selectedGroup, showNewTaskForm} = this.props
     return (
       // <Fade in={!!props.selectedGroup}>
       <Container>
@@ -49,14 +31,14 @@ class TaskList extends React.Component {
                         <div className="col-sm-2">
                           <Checkbox checked={task.isDone}
                               color="primary"                           
-                              onChange={this.handleCheck(index)} />
+                              onChange={() => this.props.changeTaskStatus(index)} />
                         </div>                        
                         <div className="col-sm-9" style={styles.taskName(task.isDone)}>
                           {task.name}
                         </div>
                         <div style={styles.deleteIconWrapper} className="col-sm-1">
                           <i style={styles.pointer} className="fa fa-times" 
-                            onClick={() => this.deleteTaskFunc(task.id)} 
+                            onClick={() => this.props.deleteTask(index)} 
                             title="Delete task"></i>
                         </div>
                       </div>
@@ -68,11 +50,7 @@ class TaskList extends React.Component {
           </Col>
         </Row>
         <Row>
-          {
-            this.state.showAddTaskForm
-            ? <NewTaskForm showAddForm={this.showAddForm}></NewTaskForm>
-            : <button style={styles.addBtn} onClick={this.showAddForm}>Add new task</button> 
-          }
+          <TaskListButtonBlock />       
         </Row>
       </Container>
       // </Fade>
@@ -101,21 +79,7 @@ const styles = {
     return isDone 
       ? {textAlign: 'left', textDecoration: 'line-through'} 
       : {textAlign: 'left', textDecoration: 'none'}
-  },
-
-  addBtn: {
-    margin: '2rem auto',
-    padding: '5px 10px',
-    backgroundColor: '#61dafb',
-    border: '1px solid grey',
-    borderRadius: '5px',
-    boxShadow: '2px 2px 4px rgba(80, 80, 80, 1)',
-    color: 'black',
-    outline: 'none',
-    ':active': {
-      margin: '2.2rem auto'
-    }
-  },
+  },  
 
   deleteIconWrapper: {
     textAlign: 'right'    
@@ -124,7 +88,8 @@ const styles = {
 
 const mapDispatchToProps = dispatch => {
   return {
-    deleteTask: id => dispatch(deleteTask(id))
+    deleteTask: index => dispatch(deleteTask(index)),
+    changeTaskStatus: index => dispatch(changeTaskStatus(index)),
   }
 }
 

@@ -7,7 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 
-const MyModal = (props) => {
+const MyModal = props => {
   return (
     <Dialog
       open={props.isModalOpen}

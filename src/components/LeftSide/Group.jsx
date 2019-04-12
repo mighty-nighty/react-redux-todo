@@ -7,7 +7,7 @@ import { selectGroup } from "../../actions/groupActions";
 // import Row from 'react-bootstrap/Row';
 // import Container from 'react-bootstrap/Container';
 
-const Group = (props) => {
+const Group = props => {
   const handleClick = () => {
     props.selectGroup(props.groupIndex)
   }  

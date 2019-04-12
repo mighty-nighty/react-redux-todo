@@ -70,6 +70,7 @@ const styles = {
     border: '1px solid grey',
     borderRadius: '5px',
     boxShadow: '2px 2px 4px rgba(128, 128, 128, 0.6)',
+    outline: 'none',
     ':active': {
       margin: '.6rem 0 0 1rem'
     }

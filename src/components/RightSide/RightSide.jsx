@@ -1,15 +1,13 @@
 import React from 'react' ;
 import TaskList from './TaskList';
 
-const RightSide = (props) => {  
+const RightSide = props => {  
   return (
     <div style={styles.rightSide}>
       {
         props.selectedGroupIndex !== null
         ? <TaskList selectedGroup={props.groups[props.selectedGroupIndex]}
-                    selectedGroupIndex={props.selectedGroupIndex}                     
-                    deleteTask={props.deleteTask}
-                    taskStatusChanged={props.taskStatusChanged} />
+                    selectedGroupIndex={props.selectedGroupIndex} />
         : <div style={styles.message}>
             Pick a group or create your custom group to add tasks
           </div>

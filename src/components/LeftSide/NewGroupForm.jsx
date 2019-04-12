@@ -10,7 +10,7 @@ class NewGroupForm extends React.Component {
     groupName: ''
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault()
     if (this.state.groupName) {
       this.props.addGroup(this.state.groupName)
@@ -18,14 +18,14 @@ class NewGroupForm extends React.Component {
     }
   }
 
-  handleChange = (e) => {
+  handleChange = e => {
     this.setState({ groupName: e.target.value })
   }  
 
   render() {
     return (
       <form style={styles.form} onSubmit={this.handleSubmit}>
-        <input style={[styles.border, styles.input]} type="text" placeholder="Group name" onChange={this.handleChange} />
+        <input style={[styles.border, styles.input]} type="text" placeholder="Group name" onChange={this.handleChange} autoFocus />
         <button style={[styles.border, styles.button]} type="submit">Save</button>
         <button style={[styles.border, styles.button]} onClick={this.props.hideNewGroupForm}>Cancel</button>
       </form>
@@ -58,7 +58,12 @@ const styles = {
 const mapDispatchToProps = dispatch => {
   return {
     addGroup: name => dispatch(addGroup(name)),
-    hideNewGroupForm: () => dispatch(toggleNewGroupFormVisibility())
+    hideNewGroupForm: e => {
+      if (e) {
+        e.preventDefault()
+      }
+      dispatch(toggleNewGroupFormVisibility())
+    }
   }
 }
 

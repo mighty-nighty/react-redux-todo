@@ -2,7 +2,7 @@ import React from 'react';
 import Radium from 'radium';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { addTask } from '../../actions/taskActions';
+import { addTask } from '../../actions/groupActions';
 
 class NewTaskForm extends React.Component {
   state = {
@@ -12,15 +12,16 @@ class NewTaskForm extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault()
     this.props.addTask(this.state.taskName)
-    this.props.showAddForm()
+    this.props.toggleTaskFormVisibility()
   }
 
   handleChange = (e) => {
     this.setState({ taskName: e.target.value })
   }
 
-  handleCancel = () => {
-    this.props.showAddForm()
+  handleCancel = (e) => {
+    e.preventDefault()
+    this.props.toggleTaskFormVisibility()
   }
 
   render() {
