@@ -17,7 +17,7 @@ interface ITaskListProps {
 }
 
 const TaskNameWrapper = styled.div<any>`
-  text-align: 'left';
+  text-align: center;
   text-decoration: ${props => props.isDone ? 'line-through' : 'none'};
 `;
 
@@ -44,10 +44,10 @@ const TaskList: React.FC<ITaskListProps> = ({selectedGroup, changeTaskStatus, de
                             color="primary"                           
                             onChange={() => changeTaskStatus(index)} />
                       </div>                        
-                      <TaskNameWrapper className="col-sm-9" isDone={task.isDone}>
+                      <TaskNameWrapper className="col-sm-8" isDone={task.isDone}>
                         {task.name}
                       </TaskNameWrapper>
-                      <DeleteIconWrapper className="col-sm-1">
+                      <DeleteIconWrapper className="col-sm-2">
                         <i style={styles.pointer} className="fa fa-times" 
                           onClick={() => deleteTask(index)} 
                           title="Delete task"></i>
