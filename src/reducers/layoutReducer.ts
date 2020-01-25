@@ -1,9 +1,14 @@
-const initState = {
+interface ILayoutState {
+  newGroupFormVisible: boolean,
+  showNewTaskForm: boolean,
+}
+
+const initState: ILayoutState = {
   newGroupFormVisible: false,
   showNewTaskForm: false,
 }
 
-const layoutReducer = (state = initState, action) => {
+const layoutReducer = (state = initState, action: any) => {
   switch(action.type) {
     case 'TOGGLE_GROUP_FORM_VISIBILITY':
       let updatedGroupFormVisibility = !state.newGroupFormVisible

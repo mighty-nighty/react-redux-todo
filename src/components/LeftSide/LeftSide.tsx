@@ -3,18 +3,11 @@ import GroupList from './GroupList';
 import NewGroupForm from './NewGroupForm';
 import { connect } from 'react-redux';
 
-const LeftSide = props => {  
-  return (
-    <div style={styles.leftSide}>
-      {
-        props.newGroupFormVisible 
-        ? <NewGroupForm />
-        : <GroupList groups={props.groups} />
-      }     
-    </div>
-  ) 
+interface ILeftSideProps {
+  groups: any
+  newGroupFormVisible: boolean
 }
-    
+
 const styles = {
   leftSide: {
     width: '26%',
@@ -23,7 +16,19 @@ const styles = {
   }  
 }
 
-const mapStateToProps = state => {
+const LeftSide: React.FC<ILeftSideProps> = ({groups, newGroupFormVisible}) => {
+  return (
+    <div style={styles.leftSide}>
+      {
+        newGroupFormVisible 
+        ? <NewGroupForm />
+        : <GroupList groups={groups} />
+      }     
+    </div>
+  ) 
+}
+
+const mapStateToProps = (state: any) => {
   return {
     newGroupFormVisible: state.layout.newGroupFormVisible
   }

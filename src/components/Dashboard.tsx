@@ -4,14 +4,9 @@ import RightSide from './RightSide/RightSide';
 import { connect } from 'react-redux';
 // import { withRouter } from 'react-router-dom';
 
-const Dashboard = props => {
-  return (
-    <div style={styles.dashboard}>
-      <LeftSide groups={props.groups} />
-      <RightSide groups={props.groups}
-        selectedGroupIndex={props.selectedGroupIndex} />
-    </div>
-  )  
+interface IDashboardProps {
+  groups: any
+  selectedGroupIndex: number
 }
 
 const styles = {
@@ -19,11 +14,21 @@ const styles = {
     width: '100vw',
     height: 'calc(100vh - 78px)',
     display: 'flex',
-    flexDirection: 'row',
+    // flexDirection: 'row',
   }
 }
 
-const mapStateToProps = state => {
+const Dashboard: React.FC<IDashboardProps> = ({groups, selectedGroupIndex}) => {
+  return (
+    <div style={styles.dashboard}>
+      <LeftSide groups={groups} />
+      <RightSide groups={groups}
+        selectedGroupIndex={selectedGroupIndex} />      
+    </div>
+  )  
+}
+
+const mapStateToProps = (state: any) => {
   return {
     groups: state.groups.allGroups,
     selectedGroupIndex: state.groups.selectedGroupIndex

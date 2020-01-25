@@ -1,4 +1,9 @@
-const initState = {
+interface IGroupsState {
+  allGroups: any[]
+  selectedGroupIndex: any
+}
+
+const initState: IGroupsState = {
   allGroups: [
     {
       id: 1,
@@ -30,7 +35,7 @@ const initState = {
   selectedGroupIndex: null
 }
 
-const groupsReducer = (state = initState, action) => {
+const groupsReducer = (state = initState, action: any) => {
   switch(action.type) {
     case 'ADD_GROUP':
       let newGroup = { id: state.allGroups.length + 1, name: action.payload, tasks: [] }
@@ -42,7 +47,6 @@ const groupsReducer = (state = initState, action) => {
     case 'SELECT_GROUP':
       let updatedSelectedGroup = action.payload
       return {...state, selectedGroupIndex: updatedSelectedGroup}
-    
     case 'ADD_TASK':
       let newTask = {
         id: state.allGroups[state.selectedGroupIndex].tasks.length + 1,
@@ -54,13 +58,13 @@ const groupsReducer = (state = initState, action) => {
       updatedGroups.splice(state.selectedGroupIndex, 1, updatedGroup)
       return {...state, allGroups: updatedGroups}
     case 'DELETE_TASK':
-      let updatedTasks = state.allGroups[state.selectedGroupIndex].tasks.filter((task, index) => index !== action.payload)
+      let updatedTasks = state.allGroups[state.selectedGroupIndex].tasks.filter((task: any, index: number) => index !== action.payload)
       updatedGroup = {...state.allGroups[state.selectedGroupIndex], tasks: updatedTasks}
       updatedGroups = [...state.allGroups]
       updatedGroups.splice(state.selectedGroupIndex, 1, updatedGroup)
       return {...state, allGroups: updatedGroups}
     case 'CHANGE_TASK_STATUS':
-      updatedTasks = state.allGroups[state.selectedGroupIndex].tasks.map((task, index) => {
+      updatedTasks = state.allGroups[state.selectedGroupIndex].tasks.map((task: any, index: number) => {
         if (index === action.payload) {
           task.isDone = !task.isDone
         }

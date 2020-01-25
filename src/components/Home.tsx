@@ -1,7 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-const Home = () => {
+const styles = {
+  title: {
+    margin: '8rem auto 2rem'
+  }
+}
+
+const Home: React.FC<any> = () => {
   return (
     <div>
       <h2 style={styles.title}>Welcome to your Actionlist!</h2>
@@ -12,12 +18,6 @@ const Home = () => {
       </div>
     </div>       
   )
-}
-
-const styles = {
-  title: {
-    margin: '8rem auto 2rem'
-  }
 }
 
 export default Home;
