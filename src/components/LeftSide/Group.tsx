@@ -5,7 +5,6 @@ import styled from "styled-components";
 interface IGroupProps {
   group: any
   groupIndex: number                           
-  deleteGroup: any
   showDeleteModal: any
   selectGroup?: any // откуда эта хрень??
 }
