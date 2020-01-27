@@ -7,7 +7,7 @@ const styles = {
   }
 }
 
-const Home: React.FC<any> = () => {
+const Home: React.FC = () => {
   return (
     <div>
       <h2 style={styles.title}>Welcome to your Actionlist!</h2>

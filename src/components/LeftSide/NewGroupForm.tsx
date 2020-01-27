@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { addGroup } from '../../actions/groupActions';
-import { toggleNewGroupFormVisibility } from '../../actions/layoutActions';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 interface INewGroupFormProps {
-  addGroup: any
-  hideNewGroupForm: any
+
 }
 
 const border = 'border-radius: 4px; border: 1px solid grey;'
@@ -28,10 +25,18 @@ const ButtonStyled = styled.button`
   background-color: #61dafb;
 `;
 
-const NewGroupForm: React.FC<INewGroupFormProps> = ({addGroup, hideNewGroupForm}) => {  
+const NewGroupForm: React.FC<INewGroupFormProps> = () => {  
   const [groupName, setGroupName] = useState('');
+  const dispatchAction = useDispatch();
+  const addGroup = (name: string) => dispatchAction({type: 'ADD_GROUP', payload: name});
+  const hideNewGroupForm = (e?: React.MouseEvent<HTMLButtonElement>) => {
+    if (e) {
+      e.preventDefault();
+    }
+    dispatchAction({type: 'TOGGLE_GROUP_FORM_VISIBILITY'});
+  }
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (groupName) {
       addGroup(groupName);
@@ -52,16 +57,4 @@ const NewGroupForm: React.FC<INewGroupFormProps> = ({addGroup, hideNewGroupForm}
   )  
 }
 
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    addGroup: (name: any) => dispatch(addGroup(name)),
-    hideNewGroupForm: (e: any) => {
-      if (e) {
-        e.preventDefault();
-      }
-      dispatch(toggleNewGroupFormVisibility());
-    }
-  }
-}
-
-export default connect(null, mapDispatchToProps)(NewGroupForm);
+export default NewGroupForm;

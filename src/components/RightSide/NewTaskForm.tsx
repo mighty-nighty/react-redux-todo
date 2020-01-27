@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { addTask } from '../../actions/groupActions';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 interface INewTaskFormProps {
-  addTask: any
   toggleTaskFormVisibility: () => void
 }
 
@@ -28,20 +26,24 @@ const ButtonStyled = styled.button`
   background-color: #61dafb;
 `;
 
-const NewTaskForm: React.FC<INewTaskFormProps> = ({addTask, toggleTaskFormVisibility}) => {  
+const NewTaskForm: React.FC<INewTaskFormProps> = ({toggleTaskFormVisibility}) => {  
   const [taskName, setTaskName] = useState('');
+  const dispatchAction = useDispatch();
+  const addTask = (name: string) => dispatchAction({type: 'ADD_TASK', payload: name});
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    addTask(taskName);
-    toggleTaskFormVisibility();
+    if (taskName) {
+      addTask(taskName);
+      toggleTaskFormVisibility();
+    }
   }
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTaskName(e.target.value);
   }
 
-  const handleCancel = (e: any) => {
+  const handleCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     toggleTaskFormVisibility();
   }
@@ -56,10 +58,4 @@ const NewTaskForm: React.FC<INewTaskFormProps> = ({addTask, toggleTaskFormVisibi
   
 }
 
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    addTask: (name: any) => dispatch(addTask(name))
-  }
-}
-
-export default connect(null, mapDispatchToProps)(NewTaskForm);
+export default NewTaskForm;

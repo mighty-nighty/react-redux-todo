@@ -30,7 +30,7 @@ const styles = {
   }
 }
 
-const App: React.FC<any> = () => {
+const App: React.FC = () => {
   return (
     <Provider store={store}>
       <div className="App">

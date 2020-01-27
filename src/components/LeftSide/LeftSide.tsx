@@ -1,11 +1,10 @@
 import React from 'react';
 import GroupList from './GroupList';
 import NewGroupForm from './NewGroupForm';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 interface ILeftSideProps {
   groups: any
-  newGroupFormVisible: boolean
 }
 
 const styles = {
@@ -16,7 +15,9 @@ const styles = {
   }  
 }
 
-const LeftSide: React.FC<ILeftSideProps> = ({groups, newGroupFormVisible}) => {
+const LeftSide: React.FC<ILeftSideProps> = ({groups}) => {
+  const newGroupFormVisible = useSelector((state: any) => state.layout.newGroupFormVisible);
+  
   return (
     <div style={styles.leftSide}>
       {
@@ -28,10 +29,4 @@ const LeftSide: React.FC<ILeftSideProps> = ({groups, newGroupFormVisible}) => {
   ) 
 }
 
-const mapStateToProps = (state: any) => {
-  return {
-    newGroupFormVisible: state.layout.newGroupFormVisible
-  }
-}
-
-export default connect(mapStateToProps)(LeftSide);
+export default LeftSide;
