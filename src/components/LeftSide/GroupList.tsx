@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
 import Group from './Group';
 import MyModal from './MyModal';
-import { deleteGroup } from '../../actions/groupActions';
-import { toggleNewGroupFormVisibility } from '../../actions/layoutActions';
+import { useDispatch } from 'react-redux';
 import styled, { css } from 'styled-components';
 
 interface IGroupListProps {
-  deleteGroup: any
   groups: any
-  showNewGroupForm: any
 }
 
 const Title = styled.div`
@@ -42,11 +38,14 @@ const Modal = css`
   width: 480px;
 `;
 
-const GroupList: React.FC<IGroupListProps> = ({deleteGroup, groups, showNewGroupForm}) => {
+const GroupList: React.FC<IGroupListProps> = ({groups}) => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [selectedGroupIndex, setSelectedGroupIndex] = useState(null); 
+  const [selectedGroupIndex, setSelectedGroupIndex] = useState<number | null>(null);
+  const dispatchAction = useDispatch();
+  const deleteGroup = (index: number | null) => dispatchAction({type: 'DELETE_GROUP', payload: index});
+  const showNewGroupForm = () => dispatchAction({type: 'TOGGLE_GROUP_FORM_VISIBILITY'}); 
 
-  const showDeleteModal = (groupIndex: any): void => {
+  const showDeleteModal = (groupIndex: number): void => {
     setModalOpen(true);
     setSelectedGroupIndex(groupIndex);
   }
@@ -64,7 +63,6 @@ const GroupList: React.FC<IGroupListProps> = ({deleteGroup, groups, showNewGroup
     return <Group group={group} 
                   key={index}
                   groupIndex={index}                            
-                  deleteGroup={deleteGroup}
                   showDeleteModal={showDeleteModal} />
   })
   
@@ -87,11 +85,4 @@ const GroupList: React.FC<IGroupListProps> = ({deleteGroup, groups, showNewGroup
   ) 
 }
 
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    deleteGroup: (index: any) => dispatch(deleteGroup(index)),
-    showNewGroupForm: () => dispatch(toggleNewGroupFormVisibility())
-  }
-}
-
-export default connect(null, mapDispatchToProps)(GroupList);
+export default GroupList;
